@@ -6,7 +6,8 @@
 
     <!-- zimjs.com - JavaScript Canvas Framework -->
     <script type="module">
-      import zim from "https://zimjs.org/cdn/015/zim";
+      import zim from "https://zimjs.org/cdn/015/zim_game";
+      //   import zim from "https://zimjs.com/cdn/015/zim_game";
 
       // See Docs under Frame for FIT, FILL, FULL, and TAG
       new Frame(FIT, 1024, 768, light, dark, ready);
@@ -14,7 +15,110 @@
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
 
-        new Circle(100, blue).center().drag();
+        const timer = new Timer({
+          time: 60,
+          borderColor: dark,
+          isometric: LEFT, // isometric for left side of board
+        }).loc(700, 100);
+
+        let circle = new Circle().pos(10, 10);
+
+        circle.drag({ boundary: new Boundary(circle.x, 100, 0, 550) });
+
+        const pointsCollection = [
+          {
+            points: [
+              [-472.9, 176.1, 0, 0, -30, 0, 15, 0],
+              [21.6, -79.3, 0, 0, -11.2, -15, 11.3, 15, "straight"],
+              [66.5, -85.3, 0, 0, 0, 0, 0, 0, "none"],
+              [109.7, -91.2, 0, 0, -3.2, -4.2, 3.2, 4.2],
+              [166.7, -95.9, 0, 0, 0, 0, 0, 0, "none"],
+              [249.1, -99.4, 0, 0, -17.5, 1.1, 15.4, -1, "straight"],
+              [324.4, -101.8, 0, 0, -12.5, 0, 30, 0],
+            ],
+            color: red,
+          },
+          {
+            points: [
+              [-463.4, -111.4, 0, 0, -30, 0, 30, 0],
+              [27.3, -20.6, 0, 0, -30, 0, 30, 0],
+              [150, 0, 0, 0, -30, 0, 30, 0],
+              [231.4, 37.7, 0, 0, -30, 0, 30, 0],
+              [311.7, 165.5, 0, 0, -30, 0, 30, 0],
+            ],
+            color: blue,
+          },
+          {
+            points: [
+              [-480.4, 18, 0, 0, -30, 0, 30, 0],
+              [75, 60, 0, 0, -30, 0, 30, 0],
+              [150, 0, 0, 0, -30, 0, 30, 0],
+              [225, 60, 0, 0, -30, 0, 30, 0],
+              [326.5, 31.8, 0, 0, -30, 0, 30, 0],
+            ],
+            color: grey,
+          },
+          {
+            points: [
+              [-491, 214.3, 0, 0, -30, 0, 30, 0],
+              [75, 60, 0, 0, -30, 0, 30, 0],
+              [150, 0, 0, 0, -30, 0, 30, 0],
+              [225, 60, 0, 0, -30, 0, 30, 0],
+              [336.1, -140, 0, 0, -30, 0, 30, 0],
+            ],
+            color: green,
+          },
+        ];
+
+        let winner = pointsCollection[rand(pointsCollection.length - 1)].color;
+
+        let target = new Circle({ color: winner }).pos(130, 30);
+
+        console.log(winner);
+        loop(pointsCollection.length, (i) => {
+          let points = pointsCollection[i];
+
+          const path = new Squiggle({
+            points: points.points,
+            showControls: false,
+            onTop: false,
+          })
+            .center()
+            .drag();
+
+          let object = new Circle({ color: points.color }).loc(
+            path.pointCircles[path.pointCircles.length - 1]
+          );
+
+          circle.on("pressup", () => {
+            if (path.pointCircles[0].hitTestBounds(circle)) {
+              zogr(path.pointCircles.length - 1);
+
+              circle.animate({
+                props: { path: path, zoom: [0.2, 1.2] },
+                time: 20,
+                ease: "linear",
+                drag: true,
+                loop: true,
+                loopCall: () => {
+                  circle.pauseAnimate(true);
+                  if (winner == points.color) {
+                    zogr("winner");
+                  } else {
+                    zogr("loser");
+                  }
+                  // Ticker.add(ticker);
+                  circle.percentComplete = 0.01;
+                },
+                //   startPercent: 50,
+                //   percent: 50,
+                //   rewind: true,
+                //   startPaused: false,
+              });
+              circle.pauseAnimate(false);
+            }
+          });
+        });
       } // end ready
     </script>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
