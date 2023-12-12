@@ -16,7 +16,7 @@
         // put code here
 
         const timer = new Timer({
-          time: 30,
+          time: 10,
           borderColor: dark,
           isometric: LEFT, // isometric for left side of board
         }).loc(700, 100);
@@ -30,7 +30,7 @@
                 {
                   label: "Try again",
                   call: () => {
-                    zgo("index.html");
+                    zgo("index3.html");
                   },
                 },
               ],
@@ -46,19 +46,15 @@
         const pointsCollection = [
           {
             points: [
-              [-63.6, 0, 0, 0, -30, 0, 5.2, 0],
-              [38.2, 90.3, 0, 0, -23.3, 66.9, 13.4, -38.4, "straight"],
-              [117.5, -2.3, 0, 0, 26.7, -105.8, -44.2, 175.2, "straight"],
-              [255.5, 189.7, 0, 0, -99, 28, 60.8, -17.2, "straight"],
-              [340.5, 25.9, 0, 0, 39.7, -22, -271.5, 150.3, "straight"],
-              [537.4, 107.9, 0, 0, 1.6, -16.3, -7.4, 72.6, "straight"],
-              [603.5, 129.9, 0, 0, -41.3, 0.3, 33.1, -0.3, "straight"],
-              [702.8, 195.8, 0, 0, -26.9, -12.7, 60.5, 28.6],
-              [695.1, 0, 0, 0, -67.1, 1.1, 67.1, -1.1],
-              [690.5, 121.5, 0, 0, -110.6, 0, 110.6, 0],
-              [829.1, 102.9, 0, 0, -30, 0, 30, 0],
+              [-472.9, 176.1, 0, 0, -30, 0, 15, 0],
+              [21.6, -79.3, 0, 0, -11.2, -15, 11.3, 15, "straight"],
+              [66.5, -85.3, 0, 0, 0, 0, 0, 0, "none"],
+              [109.7, -91.2, 0, 0, -3.2, -4.2, 3.2, 4.2],
+              [166.7, -95.9, 0, 0, 0, 0, 0, 0, "none"],
+              [249.1, -99.4, 0, 0, -17.5, 1.1, 15.4, -1, "straight"],
+              [324.4, -101.8, 0, 0, -12.5, 0, 30, 0],
             ],
-            color: red,
+            color: pink,
           },
           {
             points: [
@@ -68,7 +64,7 @@
               [231.4, 37.7, 0, 0, -30, 0, 30, 0],
               [311.7, 165.5, 0, 0, -30, 0, 30, 0],
             ],
-            color: blue,
+            color: brown,
           },
           {
             points: [
@@ -78,7 +74,7 @@
               [225, 60, 0, 0, -30, 0, 30, 0],
               [326.5, 31.8, 0, 0, -30, 0, 30, 0],
             ],
-            color: grey,
+            color: black,
           },
           {
             points: [
@@ -88,7 +84,7 @@
               [225, 60, 0, 0, -30, 0, 30, 0],
               [336.1, -140, 0, 0, -30, 0, 30, 0],
             ],
-            color: green,
+            color: orange,
           },
         ];
 
@@ -128,16 +124,17 @@
                     new Panel({
                       content: {
                         titleBar: "Winner",
-                        message: "Congratulations! You've won this level.",
+                        message:
+                          "Congratulations! You've completed all levels.",
                         buttons: [
                           {
-                            label: "Next Level",
+                            label: "Replay this level",
                             call: () => {
-                              zgo("index2.html");
+                              zgo("index3.html");
                             },
                           },
                           {
-                            label: "Try again",
+                            label: "Play Again from start",
                             call: () => {
                               zgo("index.html");
                             },
@@ -155,7 +152,7 @@
                           {
                             label: "Try again",
                             call: () => {
-                              zgo("index.html");
+                              zgo("index3.html");
                             },
                           },
                         ],
