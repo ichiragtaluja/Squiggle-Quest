@@ -6,175 +6,28 @@
 
     <!-- zimjs.com - JavaScript Canvas Framework -->
     <script type="module">
-      import zim from "https://zimjs.org/cdn/015/zim_game";
-      //   import zim from "https://zimjs.com/cdn/015/zim_game";
+      import zim from "https://zimjs.org/cdn/015/zim";
+
+      const path = "assets/";
+      const assets = ["background.png", "roboto.ttf"];
 
       // See Docs under Frame for FIT, FILL, FULL, and TAG
-      new Frame(FIT, 1024, 768, light, dark, ready);
+      new Frame(FIT, 1024, 768, light, dark, ready, assets, path);
       function ready() {
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
+        new Label({ text: "SQUIGGLE QUEST", font: "roboto" })
+          .centerReg()
+          .sca(3);
+        new Pic(assets[0]).center().sca(0.9).bot();
 
-        const timer = new Timer({
-          time: 30,
-          borderColor: dark,
-          isometric: LEFT, // isometric for left side of board
-        }).loc(700, 100);
-
-        timer.on("complete", () => {
-          new Panel({
-            content: {
-              titleBar: "Time's Up",
-              message: "You were soooo close!",
-              buttons: [
-                {
-                  label: "Try again",
-                  call: () => {
-                    zgo("index.html");
-                  },
-                },
-              ],
-            },
-          }).center();
-          zogr("loser");
-        });
-
-        let circle = new Circle().pos(10, 10);
-
-        circle.drag({ boundary: new Boundary(circle.x, 100, 0, 550) });
-
-        const pointsCollection = [
-          {
-            points: [
-              [-63.6, 0, 0, 0, -30, 0, 5.2, 0],
-              [38.2, 90.3, 0, 0, -23.3, 66.9, 13.4, -38.4, "straight"],
-              [117.5, -2.3, 0, 0, 26.7, -105.8, -44.2, 175.2, "straight"],
-              [255.5, 189.7, 0, 0, -99, 28, 60.8, -17.2, "straight"],
-              [340.5, 25.9, 0, 0, 39.7, -22, -271.5, 150.3, "straight"],
-              [537.4, 107.9, 0, 0, 1.6, -16.3, -7.4, 72.6, "straight"],
-              [603.5, 129.9, 0, 0, -41.3, 0.3, 33.1, -0.3, "straight"],
-              [702.8, 195.8, 0, 0, -26.9, -12.7, 60.5, 28.6],
-              [695.1, 0, 0, 0, -67.1, 1.1, 67.1, -1.1],
-              [690.5, 121.5, 0, 0, -110.6, 0, 110.6, 0],
-              [829.1, 102.9, 0, 0, -30, 0, 30, 0],
-            ],
-            color: red,
-          },
-          {
-            points: [
-              [-463.4, -111.4, 0, 0, -30, 0, 30, 0],
-              [27.3, -20.6, 0, 0, -30, 0, 30, 0],
-              [150, 0, 0, 0, -30, 0, 30, 0],
-              [231.4, 37.7, 0, 0, -30, 0, 30, 0],
-              [311.7, 165.5, 0, 0, -30, 0, 30, 0],
-            ],
-            color: blue,
-          },
-          {
-            points: [
-              [-480.4, 18, 0, 0, -30, 0, 30, 0],
-              [75, 60, 0, 0, -30, 0, 30, 0],
-              [150, 0, 0, 0, -30, 0, 30, 0],
-              [225, 60, 0, 0, -30, 0, 30, 0],
-              [326.5, 31.8, 0, 0, -30, 0, 30, 0],
-            ],
-            color: grey,
-          },
-          {
-            points: [
-              [-491, 214.3, 0, 0, -30, 0, 30, 0],
-              [75, 60, 0, 0, -30, 0, 30, 0],
-              [150, 0, 0, 0, -30, 0, 30, 0],
-              [225, 60, 0, 0, -30, 0, 30, 0],
-              [336.1, -140, 0, 0, -30, 0, 30, 0],
-            ],
-            color: green,
-          },
-        ];
-
-        let winner = pointsCollection[rand(pointsCollection.length - 1)].color;
-
-        let target = new Circle({ color: winner }).pos(130, 30);
-
-        console.log(winner);
-        loop(pointsCollection.length, (i) => {
-          let points = pointsCollection[i];
-
-          const path = new Squiggle({
-            points: points.points,
-            showControls: false,
-            onTop: false,
-          })
-            .center()
-            .drag();
-
-          let object = new Circle({ color: points.color }).loc(
-            path.pointCircles[path.pointCircles.length - 1]
-          );
-
-          circle.on("pressup", () => {
-            if (path.pointCircles[0].hitTestBounds(circle)) {
-              zogr(path.pointCircles.length - 1);
-
-              circle.animate({
-                props: { path: path, zoom: [0.2, 1.2] },
-                time: 20,
-                ease: "linear",
-                drag: true,
-                loop: true,
-                loopCall: () => {
-                  circle.pauseAnimate(true);
-                  if (winner == points.color) {
-                    new Panel({
-                      content: {
-                        titleBar: "Winner",
-                        message: "Congratulations! You've won this level.",
-                        buttons: [
-                          {
-                            label: "Next Level",
-                            call: () => {
-                              zgo("index2.html");
-                            },
-                          },
-                          {
-                            label: "Try again",
-                            call: () => {
-                              zgo("index.html");
-                            },
-                          },
-                        ],
-                      },
-                    }).center();
-                    zogr("winner");
-                  } else {
-                    new Panel({
-                      content: {
-                        titleBar: "Try Again",
-                        message: "You were soooo close!",
-                        buttons: [
-                          {
-                            label: "Try again",
-                            call: () => {
-                              zgo("index.html");
-                            },
-                          },
-                        ],
-                      },
-                    }).center();
-                    zogr("loser");
-                  }
-                  // Ticker.add(ticker);
-                  circle.percentComplete = 0.01;
-                },
-                //   startPercent: 50,
-                //   percent: 50,
-                //   rewind: true,
-                //   startPaused: false,
-              });
-              circle.pauseAnimate(false);
-            }
+        new Button({ label: "Play", backgroundColor: "green" })
+          .centerReg()
+          .pos(H / 2, W / 2)
+          .drag()
+          .tap(() => {
+            zgo("level1.html");
           });
-        });
       } // end ready
     </script>
     <meta name="viewport" content="width=device-width, user-scalable=no" />
