@@ -40,7 +40,7 @@
         timer.on("complete", () => {
           circle.removeAllEventListeners("pressup");
           circle.noDrag();
-          new Panel({
+          new Pane({
             content: {
               titleBar: "Time's Up",
               message: "You were soooo close!",
@@ -176,7 +176,7 @@
                 loopCall: () => {
                   circle.pauseAnimate(true);
                   if (winner == points.img) {
-                    new Panel({
+                    new Pane({
                       content: {
                         titleBar: "Winner",
                         message:
@@ -201,7 +201,7 @@
                     }).center();
                     zogr("winner");
                   } else {
-                    new Panel({
+                    new Pane({
                       content: {
                         titleBar: "Try Again",
                         message: "You were soooo close!",
