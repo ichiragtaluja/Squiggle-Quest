@@ -26,7 +26,11 @@
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
         let background = new Pic(assets[5]).center().sca(0.89).bot();
-        let circle = new Pic(assets[4]).centerReg().sca(0.25).pos(10, 10);
+        let circle = new Pic(assets[4])
+          .centerReg()
+          .sca(0.25)
+          .pos(10, 10)
+          .outline();
         // .outline();
 
         const timer = new Timer({
@@ -153,6 +157,7 @@
             points: points.points,
             showControls: false,
             onTop: false,
+            interactive: false,
           })
             .center()
             .drag();
