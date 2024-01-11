@@ -26,11 +26,8 @@
         // given F (Frame), S (Stage), W (width), H (height)
         // put code here
         let background = new Pic(assets[5]).center().sca(0.89).bot();
-        let circle = new Pic(assets[4])
-          .centerReg()
-          .sca(0.25)
-          .pos(10, 10)
-          .outline();
+        let circle = new Pic(assets[4]).centerReg().sca(0.25).pos(10, 10);
+
         // .outline();
 
         const timer = new Timer({
@@ -195,6 +192,8 @@
                         message: "Congratulations! You've won this level.",
                         buttons: [
                           {
+                            width: 300,
+                            height: 100,
                             backgroundColor: "green",
                             label: "Next Level",
                             call: () => {
@@ -202,6 +201,8 @@
                             },
                           },
                           {
+                            width: 300,
+                            height: 100,
                             backgroundColor: "green",
                             label: "Try again",
                             call: () => {
@@ -219,6 +220,8 @@
                         message: "You were soooo close!",
                         buttons: [
                           {
+                            width: 300,
+                            height: 100,
                             backgroundColor: "green",
                             label: "Try again",
                             call: () => {
